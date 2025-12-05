@@ -24,7 +24,6 @@ public class CharacterManager : MonoBehaviour
     private const int PREVIEW_COUNT = 50; // Quantos caracteres futuros mostrar/gerar
 
     // Dicionário para armazenar os conjuntos de caracteres para cada dificuldade
-    // Esta estrutura é o que garante a escalabilidade!
     private Dictionary<GameMode, string> characterSets = new Dictionary<GameMode, string>()
     {
         { GameMode.Easy, "abcdefghijklmnopqrstuvwxyz" },
@@ -64,32 +63,28 @@ public class CharacterManager : MonoBehaviour
         // Limpa a fila caso o jogo seja reiniciado
         futureCharacters.Clear();
         correctHistory.Clear();
-
-        // Preenche a fila até atingir o PREVIEW_COUNT inicial
-        for (int i = 0; i < PREVIEW_COUNT; i++)
+                
+        for (int i = 0; i < PREVIEW_COUNT; i++) // Preenche a fila até atingir o PREVIEW_COUNT inicial
         {
             FillFutureQueue(); // Adiciona um caractere aleatório
         }
 
-        // Zera os textos de histórico e pulados (se o GameManager ainda não fez)
+        // Zera os textos de histórico e pulados
         correctCTxt.text = "";
         skippedCTxt.text = "";
     }
     
     public void SetNewCharacter()   // Chamado pelo GameManager em StartGame e a cada acerto
-    {
-        // 1. ANTES DE REMOVER o caractere antigo (agora o currentChar), 
-        //    ADICIONAMOS um novo caractere ao final da fila.
+    {        
         FillFutureQueue();
+                
+        currentChar = futureCharacters.Dequeue();   // Remove o caractere que está na "frente" da fila para ser o novo ativo.
 
-        // 2. Remove o caractere que está na "frente" da fila para ser o novo ativo.
-        currentChar = futureCharacters.Dequeue();
-
-        // 3. Atualiza a UI (código da fila e caracteres central/futuros)
+        // Atualiza a UI (código da fila e caracteres central/futuros)
         activeCTxt.text = currentChar.ToString();
         UpdateFutureUI();
 
-        // TODO: Feedback visual/animação para o novo caractere (ex: fade-in)
+        // TODO: Feedback visual para o novo caractere
     }
 
     private void FillFutureQueue()
@@ -108,25 +103,18 @@ public class CharacterManager : MonoBehaviour
     {
         char[] futureArr = futureCharacters.ToArray();
         int length = Mathf.Min(futureArr.Length, PREVIEW_COUNT);
-
-        // Pega a substring do início (do 0) até o limite
-        futureCTxt.text = new string(futureArr, 0, length);
+                
+        futureCTxt.text = new string(futureArr, 0, length); // Pega a substring do início (do 0) até o limite
     }
     public void SkipCharacter()
     {
         if (!GameManager.Instance.isGameActive) return;
-
-        // 1. Lógica de Perda de Ponto
+                
         GameManager.Instance.AddScore(-1); // Perde 1 ponto
-
-        // 2. Atualiza UI de Pulados (Abaixo)
+                
         skippedCTxt.text = currentChar.ToString(); // Exibe a letra pulada
-
-        // 3. Adiciona o caractere pulado ao histórico para fins de debug/visualização
-        // (Opcional, mas mantém a letra no histórico correto por um momento antes de sumir na próxima jogada)
-
-        // 4. Sorteia o próximo (A letra pulada é perdida/removida)
-        SetNewCharacter();
+                
+        SetNewCharacter();  // Sorteia o próximo (A letra pulada é perdida/removida)
     }
 
     public void CheckInput(char keyPress)   // Recebe o caractere exato do InputManager via evento
@@ -135,9 +123,8 @@ public class CharacterManager : MonoBehaviour
         char inputChar = keyPress;
 
         if (GameManager.Instance.currentMode == GameMode.Easy)
-        {
-            // Regra do Fácil: Flexível (Padroniza para minúsculo na comparação)
-            if (char.IsLetter(targetChar))
+        {            
+            if (char.IsLetter(targetChar))  // Regra do Fácil: Flexível (Padroniza para minúsculo na comparação)
             {
                 targetChar = char.ToLower(currentChar);
                 inputChar = char.ToLower(keyPress);

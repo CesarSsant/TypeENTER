@@ -6,15 +6,13 @@ public delegate void KeyPressedAction(char key);
 
 public class InputManager : MonoBehaviour
 {
-    // Evento que outros scripts (como CharacterManager) podem assinar
-    public static event KeyPressedAction OnKeyPressed;
+    public static event KeyPressedAction OnKeyPressed;  // Evento que outros scripts (como CharacterManager) podem assinar
 
     private CharacterManager characterManager;
 
     void Start()
     {
-        // Encontra a referência, já que CharacterManager é vital
-        characterManager = Object.FindFirstObjectByType<CharacterManager>();
+        characterManager = FindFirstObjectByType<CharacterManager>();    // Encontra a referência, já que CharacterManager é vital
 
         // Garante que o CharacterManager assine este evento
         if (characterManager != null)
@@ -33,10 +31,10 @@ public class InputManager : MonoBehaviour
     }
 
     private void OnGUI()
-    {        
+    {
         Event e = Event.current;    // Captura o evento atual de input.
 
-        
+
         if (e.isKey && e.type == EventType.KeyDown) // Garante que é um evento de tecla sendo pressionada.
         {
             if (e.character != '\0')    // Garante que a tecla pressionada resultou em um caractere (não é SHIFT, ALT, etc.). O caractere '0' ou '\0' geralmente indica teclas não imprimíveis.

@@ -4,16 +4,14 @@ using UnityEngine.UI; // Para o Button
 
 public class MenuManager : MonoBehaviour
 {
-    // Chave para salvar a dificuldade
-    private const string DIFFICULTY_KEY = "SelectedDifficulty";
+    private const string DIFFICULTY_KEY = "SelectedDifficulty"; // Chave para salvar a dificuldade
 
     [SerializeField] private Button playButton; // Botão "Play" para habilitar/desabilitar
     private int selectedModeIndex = -1; // -1 significa que nada foi selecionado
 
     void Start()
     {
-        // Garante que o botão Play começa desabilitado
-        if (playButton != null)
+        if (playButton != null) // Garante que o botão Play começa desabilitado
         {
             playButton.interactable = false;
         }
@@ -24,13 +22,12 @@ public class MenuManager : MonoBehaviour
     {
         selectedModeIndex = modeIndex;
 
-        // Habilita o botão Play
-        if (playButton != null)
+        if (playButton != null) // Habilita o botão Play
         {
             playButton.interactable = true;
         }
 
-        // TODO: Feedback visual nos botões de dificuldade (ex: cor)
+        // TODO: Feedback visual nos botões de dificuldade
     }
 
     // Chamado pelo OnClick() do botão "Play"
@@ -38,11 +35,10 @@ public class MenuManager : MonoBehaviour
     {
         if (selectedModeIndex != -1)
         {
-            // 1. Salva a dificuldade para o GameManager ler
+            // Salva a dificuldade para o GameManager ler
             PlayerPrefs.SetInt(DIFFICULTY_KEY, selectedModeIndex);
             PlayerPrefs.Save();
 
-            // 2. Carrega a cena do jogo
             SceneManager.LoadScene("GameScene");
         }
     }

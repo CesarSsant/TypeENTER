@@ -14,23 +14,20 @@ public class StartGameManager : MonoBehaviour
     [SerializeField] private float blinkInterval = 0.5f; // Intervalo de 0.5 segundos
 
     private int currentProgress = 0;
-    private string currentDisplay = "";
     private Coroutine blinkingCoroutine; // Para gerenciar o efeito de piscar
 
     private const string NEXT_SCENE = "MenuScene"; // Nome da próxima cena
 
     void Start()
     {
-        // Garante que o Game Manager esteja ativo
-        if (targetTextDisplay == null)
+        if (targetTextDisplay == null)  // Garante que o Game Manager esteja ativo
         {
             Debug.LogError("targetTextDisplay não está configurado!");
             return;
         }
 
         UpdateDisplay();
-        // Inicia o efeito de piscar na letra 'E'
-        blinkingCoroutine = StartCoroutine(BlinkTargetLetter());
+        blinkingCoroutine = StartCoroutine(BlinkTargetLetter());    // Inicia o efeito de piscar na letra 'E'
     }
 
     // --- Lógica de Piscar (Blinking) ---
@@ -40,11 +37,9 @@ public class StartGameManager : MonoBehaviour
 
         while (currentProgress < TARGET_WORD.Length)
         {
-            // Espera o intervalo
-            yield return new WaitForSeconds(blinkInterval);
+            yield return new WaitForSeconds(blinkInterval); // Espera o intervalo
 
-            // Alterna a visibilidade
-            isVisible = !isVisible;
+            isVisible = !isVisible; // Alterna a visibilidade
             UpdateDisplay(isVisible);
         }
     }
@@ -59,27 +54,23 @@ public class StartGameManager : MonoBehaviour
 
             if (i < currentProgress)
             {
-                // Letra já digitada (permanece visível)
-                newDisplay += targetChar;
+                newDisplay += targetChar;   // Letra já digitada (permanece visível)
             }
             else if (i == currentProgress)
             {
                 // Letra ATUAL a ser digitada
                 if (visible)
                 {
-                    // Usa tag de cor para piscar (Exemplo: Vermelho claro)
-                    newDisplay += $"<color=#FFFFFF>{targetChar}</color>";
+                    newDisplay += $"<color=#FFFFFF>{targetChar}</color>";   // Usa tag de cor para piscar (branca)
                 }
                 else
                 {
-                    // Invisível, mas mantém o espaço
-                    newDisplay += "_";
+                    newDisplay += "_";  // Invisível, mas mantém o _
                 }
             }
             else
             {
-                // Letras futuras (ainda não mostradas, usaremos o espaço)
-                newDisplay += "_";
+                newDisplay += "_";  // Letras futuras
             }
         }
         targetTextDisplay.text = newDisplay;
@@ -92,8 +83,7 @@ public class StartGameManager : MonoBehaviour
 
         if (e.isKey && e.type == EventType.KeyDown)
         {
-            // Pega o caractere em MAIÚSCULA
-            char keyPress = char.ToUpper(e.character);
+            char keyPress = char.ToUpper(e.character);  // Pega o caractere em MAIÚSCULA
 
             if (currentProgress < TARGET_WORD.Length)
             {
@@ -108,16 +98,13 @@ public class StartGameManager : MonoBehaviour
 
         if (keyPress == targetChar)
         {
-            // 1. ACERTOU: Avança o progresso
-            currentProgress++;
+            currentProgress++;  // ACERTOU: Avança o progresso
 
-            // 2. Garante que o display atualize para a nova letra (visível)
-            UpdateDisplay(true);
+            UpdateDisplay(true);    // Garante que o display atualize para a nova letra
 
             if (currentProgress == TARGET_WORD.Length)
             {
-                // Jogo Terminado
-                if (blinkingCoroutine != null)
+                if (blinkingCoroutine != null)  // Terminou
                 {
                     StopCoroutine(blinkingCoroutine); // Para o pisca-pisca
                 }

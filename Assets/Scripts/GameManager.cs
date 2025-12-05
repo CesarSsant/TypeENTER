@@ -58,7 +58,8 @@ public class GameManager : MonoBehaviour
     {
         score += points;
         UpdateScoreUI();
-        // Feedback visual/sonoro de ponto pode ser acionado aqui (ex: um som)
+
+        // TODO: Feedback visual/sonoro de ponto pode ser acionado aqui
     }
 
     private void UpdateScoreUI()
@@ -67,9 +68,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void UpdateTimerUI()
-    {
-        // Formata o tempo para mostrar duas casas decimais
-        timerText.text = timeLeft.ToString("F2");
+    {        
+        timerText.text = timeLeft.ToString("F2");   // Formata o tempo para mostrar duas casas decimais
     }
 
     void Update()
@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
     {
         isGameActive = false;
         Debug.Log("Fim de Jogo! Seu score final: " + score);
+
         // TODO: Mostrar painel de GameOver e opções de recomeçar
     }
 }
