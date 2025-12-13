@@ -17,8 +17,10 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI skippedCTxt;
 
     [Header("Feedback Visual (Case & Digit)")]
-    [SerializeField] private GameObject uppercaseFeedbackObject; // UI para Maiúsculas
-    [SerializeField] private GameObject digitFeedbackObject;     // UI para Números
+    [SerializeField] private GameObject uppercaseFeedbackObjectOn; // UI para Maiúsculas
+    [SerializeField] private GameObject uppercaseFeedbackObjectOff; // UI para Maiúsculas
+    [SerializeField] private GameObject digitFeedbackObjectOn;     // UI para Números
+    [SerializeField] private GameObject digitFeedbackObjectOff;     // UI para Números
 
     // --- Variáveis de Jogo ---
     private char currentChar;
@@ -32,7 +34,7 @@ public class CharacterManager : MonoBehaviour
     {
         { GameMode.Easy, "abcdefghijklmnopqrstuvwxyz" },
         { GameMode.Medium, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" },
-        { GameMode.Hard, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{};:'\",.<>/?`~" }
+        { GameMode.Hard, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*()_+-=[]{};:'\",.<>/?\\" }
     };
 
     private void Awake()
@@ -85,20 +87,24 @@ public class CharacterManager : MonoBehaviour
         currentChar = futureCharacters.Dequeue();   // Remove o caractere que está na "frente" da fila para ser o novo ativo
 
         // Limpa o estado anterior: Desativa ambos os feedbacks por padrão antes de qualquer checagem
-        uppercaseFeedbackObject.SetActive(false);
-        digitFeedbackObject.SetActive(false);
+        uppercaseFeedbackObjectOn.SetActive(false);
+        uppercaseFeedbackObjectOff.SetActive(true);
+        digitFeedbackObjectOn.SetActive(false);
+        digitFeedbackObjectOff.SetActive(true);
 
         if (GameManager.Instance.currentMode != GameMode.Easy)  // O feedback é relevante apenas nos modos Médio e Difícil
         {
             
             if (char.IsLetter(currentChar) && char.IsUpper(currentChar))    // Checa se é MAIÚSCULA
             {
-                uppercaseFeedbackObject.SetActive(true);
+                uppercaseFeedbackObjectOn.SetActive(true);
+                uppercaseFeedbackObjectOff.SetActive(false);
             }
                         
             else if (char.IsDigit(currentChar)) // Checa se é NÚMERO/DÍGITO
             {
-                digitFeedbackObject.SetActive(true);
+                digitFeedbackObjectOn.SetActive(true);
+                digitFeedbackObjectOff.SetActive(false);
             }
         }
 

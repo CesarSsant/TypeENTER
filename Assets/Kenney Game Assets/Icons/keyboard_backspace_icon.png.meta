@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 69ecd7944b263f647bf820f99afe0858
+guid: b145c70a0ecbb634cab4b62f234940b5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -165668901869427220
-    second: boldpixelsx1_0
+      213: -6245400481298800387
+    second: keyboard_backspace_icon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boldpixelsx1_0
+      name: keyboard_backspace_icon_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 145
-        height: 1565
+        x: 15
+        y: 31
+        width: 98
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce56eb1f20d63bdf0800000000000000
-      internalID: -165668901869427220
+      spriteID: df0a1201a51e359a0800000000000000
+      internalID: -6245400481298800387
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      boldpixelsx1_0: -165668901869427220
+      keyboard_backspace_icon_0: -6245400481298800387
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
