@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class GameManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private GameObject gameOverPanel;
 
     [Header("Audio References")]
     [SerializeField] private AudioSource musicAudioSource; // AudioSource para a música de fundo (Pitch/Loop)
@@ -62,7 +65,10 @@ public class GameManager : MonoBehaviour
         StartGame();
         PlayerPrefs.DeleteKey(DIFFICULTY_KEY);
     }
-
+    public int GetScore()
+    {
+        return score;
+    }
     public void StartGame()
     {
         score = 0;
@@ -209,6 +215,7 @@ public class GameManager : MonoBehaviour
         musicAudioSource.clip = endMusic;
         musicAudioSource.Play();
 
+        gameOverPanel.SetActive(true);
         // TODO: Mostrar painel de GameOver e opções de recomeçar
     }
 }
