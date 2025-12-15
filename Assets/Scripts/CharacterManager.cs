@@ -174,7 +174,7 @@ public class CharacterManager : MonoBehaviour
                 correctCTxt.text = correctHistory.ToString();
             }
 
-            skippedCTxt.text = "";  // Limpa o display de Pulados
+            //skippedCTxt.text = "";  // Limpa o display de Pulados
 
             SetNewCharacter();
 

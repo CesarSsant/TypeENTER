@@ -10,6 +10,10 @@ public class InputManager : MonoBehaviour
 
     private CharacterManager characterManager;
 
+    [Header("Typing Sound Feedback")]
+    [SerializeField] private AudioSource typingSFXSource; // AudioSource
+    [SerializeField] private AudioClip[] typingClips;      // Array de sons de teclas
+
     void Start()
     {
         characterManager = FindFirstObjectByType<CharacterManager>();    // Encontra a referência, já que CharacterManager é vital
@@ -41,9 +45,20 @@ public class InputManager : MonoBehaviour
             {
                 if (GameManager.Instance.isGameActive)  // Verifica se o jogo está ativo antes de enviar o input. Evita erros durante o EndGame.
                 {
+                    PlayRandomTypingSound();
                     OnKeyPressed?.Invoke(e.character);  // Invoca o evento, enviando o caractere exato digitado. Isso permite que o CharacterManager faça a checagem.
                 }
             }
+        }
+    }
+
+    private void PlayRandomTypingSound()
+    {
+        if (typingSFXSource != null && typingClips.Length > 0)
+        {
+            int randomIndex = Random.Range(0, typingClips.Length);  // Sorteia um índice aleatório no array
+
+            typingSFXSource.PlayOneShot(typingClips[randomIndex]);  // Toca o clipe uma única vez
         }
     }
 

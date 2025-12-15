@@ -131,15 +131,6 @@ public class GameManager : MonoBehaviour
         typingSpeed = Mathf.Max(0f, typingSpeed - Time.deltaTime * 5f);
     }
 
-    public void PlayStartSequence()
-    {
-        if (sfxAudioSource != null)
-        {
-            sfxAudioSource.PlayOneShot(readyClip);
-            StartCoroutine(PlaySequenceCoroutine());
-        }
-    }
-
     private IEnumerator StartSequenceAndActivateGame()
     {
         if (sfxAudioSource != null && readyClip != null)
@@ -208,24 +199,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator PlaySequenceCoroutine()
-    {
-        yield return new WaitForSeconds(0.7f);
-        sfxAudioSource.PlayOneShot(setClip);
-
-        yield return new WaitForSeconds(0.7f);
-        sfxAudioSource.PlayOneShot(goClip);
-    }
-
     private void EndGame()
     {
         isGameActive = false;
         Debug.Log("Fim de Jogo! Seu score final: " + score);
 
+        sfxAudioSource.PlayOneShot(timeOverClip);
         musicAudioSource.Stop();
         musicAudioSource.clip = endMusic;
         musicAudioSource.Play();
-        sfxAudioSource.PlayOneShot(timeOverClip);
 
         // TODO: Mostrar painel de GameOver e opções de recomeçar
     }
