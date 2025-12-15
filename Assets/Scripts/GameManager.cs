@@ -63,7 +63,6 @@ public class GameManager : MonoBehaviour
         characterManager.SetGameMode(currentMode);
 
         StartGame();
-        PlayerPrefs.DeleteKey(DIFFICULTY_KEY);
     }
     public int GetScore()
     {
